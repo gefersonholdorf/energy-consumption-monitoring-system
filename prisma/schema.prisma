@@ -12,3 +12,63 @@ datasource db {
   provider = "mysql"
   url      = env("DATABASE_URL")
 }
+
+model User {
+  id        Int       @id @default(autoincrement())
+  name      String
+  email     String    @unique
+  password  String
+  enterprise String
+  devices   Device[] 
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+model Device {
+  id          Int              @id @default(autoincrement())
+  name        String
+  serialNumber String          @unique 
+  model       String
+  location    String           // Ex: "Sala", "Escritório", "Indústria"
+  status      DeviceStatus     @default(INACTIVE)
+  userId      Int           
+  user        User             @relation(fields: [userId], references: [id])
+  consumptions Consumption[]   // Relacionamento com os registros de consumo
+  alerts Alert[]
+  createdAt   DateTime         @default(now())
+  updatedAt   DateTime         @updatedAt
+}
+
+enum DeviceStatus {
+  ACTIVE
+  INACTIVE
+  DISCONNECTED
+}
+
+model Consumption {
+  id          Int       @id @default(autoincrement())
+  deviceId    Int
+  device      Device    @relation(fields: [deviceId], references: [id])
+  powerUsage  Float     // Consumo em watts (W)
+  voltage     Float     // Tensão em volts (V)
+  current     Float     // Corrente em amperes (A)
+  timestamp   DateTime  @default(now()) // Data e hora da leitura
+}
+
+model Alert {
+  id          Int       @id @default(autoincrement())
+  deviceId    Int
+  device      Device    @relation(fields: [deviceId], references: [id])
+  message     String
+  severity    AlertSeverity  // Nível do alerta
+  resolved    Boolean   @default(false)
+  createdAt   DateTime  @default(now())
+}
+
+enum AlertSeverity {
+  LOW
+  MEDIUM
+  HIGH
+  CRITICAL
+}
+
