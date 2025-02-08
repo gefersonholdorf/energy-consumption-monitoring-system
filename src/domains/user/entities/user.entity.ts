@@ -5,8 +5,7 @@ export interface UserProps {
     name : string
     email : string
     password : string
-    enterprise : string
-    // devices   Device[] 
+    enterprise : string 
     createdAt ?: Date
     updatedAt ?: Date
 }
