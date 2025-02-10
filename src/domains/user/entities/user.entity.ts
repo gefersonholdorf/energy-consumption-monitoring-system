@@ -1,5 +1,3 @@
-const bcryptjs = require("bcryptjs")
-
 export interface UserProps {
     id ?: number
     name : string
@@ -15,10 +13,8 @@ export class UserEntity {
 
     public static build(props : UserProps) {
         return new UserEntity({
-            ...props,
-            password: bcryptjs.hash(props.password, 10)
-        })
-    }
+            ...props
+    })}
 
     public static with(props : UserProps) {
         return new UserEntity(props)
@@ -48,11 +44,7 @@ export class UserEntity {
         return this.props.updatedAt!;
     }
 
-    get password(): never {
-        throw new Error("Access to password is restricted.");
-    }
-
-    public async verifyPassword(plainPassword: string): Promise<boolean> {
-        return await bcryptjs.compare(plainPassword, this.props.password);
+    get password(): string {
+        return this.props.password;
     }
 }
