@@ -1,6 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 import { ConsumptionEntity } from "../../../domains/consumption/entities/consumption.entity";
-import { ConsumptionGateway } from "../../../domains/consumption/gateways/consumption.gateway";
+import { ConsumptionGateway, FielConsumption } from "../../../domains/consumption/gateways/consumption.gateway";
 
 export class ConsumptionRepository implements ConsumptionGateway {
 
@@ -66,4 +66,22 @@ export class ConsumptionRepository implements ConsumptionGateway {
         return outputConsumptions
     }
 
+    async averageConsumption(deviceId : number, field : FielConsumption) : Promise<number | null> {
+        const column = field.toString();
+        const allowedFields = ["powerUsage", "currentgt", "voltage"]; 
+
+        if (!allowedFields.includes(column)) {
+            throw new Error("Invalid flied!");
+        }
+
+        const query = `
+            SELECT ROUND((SUM(${column}) / COUNT(id)), 2) AS average
+            FROM consumption
+            WHERE deviceId = ${deviceId}
+        `;
+
+        const result = await this.prismaCLient.$queryRawUnsafe<{ average: number | null }[]>(query);
+
+        return result[0]?.average ?? null;
+    }
 }

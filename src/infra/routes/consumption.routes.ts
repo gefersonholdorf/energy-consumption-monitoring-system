@@ -6,13 +6,15 @@ import { CreateConsumptionService } from "../../usecase/services/consumption/cre
 import { CreateConsumptionController } from "../controllers/consumption/create-consumption.controller";
 import { FindByDeviceConsumptionService } from "../../usecase/services/consumption/find-by-device.service";
 import { FindByDeviceConsumptioController } from "../controllers/consumption/find-by-device-consumption.controller";
+import { AlertRepository } from "../repositories/alert/alert.repository";
 
 export const consumptionRoutes = Router()
 
 const consumptionRepository = ConsumptionRepository.build(prismaClient)
 const deviceRepository = DeviceRepository.build(prismaClient)
+const alertRepository = AlertRepository.build(prismaClient)
 
-const createConsumptionService = CreateConsumptionService.build(consumptionRepository, deviceRepository)
+const createConsumptionService = CreateConsumptionService.build(consumptionRepository, deviceRepository, alertRepository)
 const findByDeviceConsumptionService = FindByDeviceConsumptionService.build(consumptionRepository, deviceRepository)
 
 const createConsumptionController = CreateConsumptionController.build(createConsumptionService)
