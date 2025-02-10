@@ -25,7 +25,7 @@ export class CreateUserController implements Controller {
 
             response.status(201).json({
                 status: 'User Created!',
-                user : user
+                user
             })
 
         } catch (error) {

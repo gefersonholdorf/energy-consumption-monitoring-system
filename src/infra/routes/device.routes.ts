@@ -19,5 +19,5 @@ const findByIdDerviceService = FindByIdDeviceService.build(deviceRepository, use
 const createDeviceController = CreateDeviceController.build(createDeviceService)
 const findByIdDeviceController = FindByIdDeviceController.build(findByIdDerviceService)
 
-deviceRoutes.post('/create-device', authenticate, (request, response, next) => createDeviceController.handle(request, response, next))
-deviceRoutes.get('/device/:id', authenticate, (request, response, next) => findByIdDeviceController.handle(request, response, next))
+deviceRoutes.post('/devices/create', authenticate, (request, response, next) => createDeviceController.handle(request, response, next))
+deviceRoutes.get('/devices/:id', authenticate, (request, response, next) => findByIdDeviceController.handle(request, response, next))

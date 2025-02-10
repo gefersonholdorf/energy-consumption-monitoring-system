@@ -25,7 +25,7 @@ export class CreateDeviceController implements Controller {
 
             response.status(201).json({
                 status: 'Device Created!',
-                user : device
+                device
             })
         } catch (error) {
             next(error)

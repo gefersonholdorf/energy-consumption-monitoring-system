@@ -4,6 +4,7 @@ import { catchException } from "./src/middlewares/catch-exception"
 import { userRoutes } from "./src/infra/routes/user.routes"
 import { authRoutes } from "./src/infra/routes/auth.routes"
 import { deviceRoutes } from "./src/infra/routes/device.routes"
+import { consumptionRoutes } from "./src/infra/routes/consumption.routes"
 
 
 // Config
@@ -17,6 +18,8 @@ app.use(express.json())
 app.use(userRoutes)
 app.use(authRoutes)
 app.use(deviceRoutes)
+app.use(consumptionRoutes)
+
 
 app.use(catchException)
 
