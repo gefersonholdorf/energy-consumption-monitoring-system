@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import { Controller } from "../controller";
 import { CreateUserInputDto, CreateUserService } from "../../../usecase/services/user/create-user.service";
-import { CreateUserSchema } from "../../../validations/create-user.schema";
+import { createUserSchema } from "../../../validations/create-user.schema";
 
 export class CreateUserController implements Controller {
 
@@ -15,17 +15,17 @@ export class CreateUserController implements Controller {
         const requestBody : CreateUserInputDto = request.body 
 
         try {
-            CreateUserSchema.parse(requestBody)
+            createUserSchema.parse(requestBody)
         } catch (error) {
             next(error)
         }
 
         try {
-            const outputBody = await this.createUserService.execute(requestBody)
+            const user = await this.createUserService.execute(requestBody)
 
             response.status(201).json({
                 status: 'User Created!',
-                user : outputBody
+                user : user
             })
 
         } catch (error) {

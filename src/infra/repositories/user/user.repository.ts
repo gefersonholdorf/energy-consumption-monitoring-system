@@ -44,4 +44,20 @@ export class UserRepository implements UserGateway {
             enterprise: user.enterprise
         }) : null
     }
+
+    async findById(id : number) : Promise<UserEntity | null> {
+        const user = await this.prismaClient.user.findFirst({
+            where: {
+                id
+            }
+        })
+
+        return user ? UserEntity.with({
+            id: user.id,
+            name: user.name,
+            email: user.email,
+            password: user.password,
+            enterprise: user.enterprise
+        }) : null
+    }
 }
