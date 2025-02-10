@@ -32,10 +32,23 @@ export class ConsumptionRepository implements ConsumptionGateway {
         })
     }
 
-    async findByDevice(id: number): Promise<ConsumptionEntity[]> {
+    async findByDevice(id: number, dtInitial : Date, dtFinish : Date): Promise<ConsumptionEntity[]> {
         const consumptions = await this.prismaCLient.consumption.findMany({
             where: {
-                deviceId: id
+                AND: [
+                    { 
+                        deviceId: id
+                    },
+                    {
+                        timestamp: {
+                            gte: dtInitial,
+                            lte: dtFinish
+                        }
+                    }
+                ]
+            },
+            orderBy: {
+                timestamp: 'asc'
             }
         })
 
