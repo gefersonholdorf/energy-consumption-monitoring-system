@@ -35,3 +35,5 @@ startSimulatorMain()
 setInterval(async() => {
     checkConsumption.execute()
 }, 60000)
+
+//Falta implementar status Active no device

@@ -35,6 +35,9 @@ export class CheckConsumption {
             const result : number = await this.consumptionRepository.checkConsumptions(deviceId) || 0
     
             if (result > 0) {
+                if (device.status == 'DISCONNECTED') {
+                    return await this.deviceRepository.alterStatusDevice(deviceId, 'ACTIVE')   
+                }
                 return
             }
 
@@ -43,7 +46,7 @@ export class CheckConsumption {
             }
             
             console.log('Disable Device')
-            return await this.deviceRepository.disableDevice(deviceId)   
+            return await this.deviceRepository.alterStatusDevice(deviceId, 'DISCONNECTED')   
         } catch (error) {
             console.log(error)
             return

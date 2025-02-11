@@ -1,5 +1,5 @@
 import { PrismaClient } from "@prisma/client";
-import { DeviceEntity } from "../../../domains/device/entities/device.entity";
+import { DeviceEntity, StatusDevice } from "../../../domains/device/entities/device.entity";
 import { DeviceGateway } from "../../../domains/device/gateway/device.gateway";
 import { idText } from "typescript";
 
@@ -87,13 +87,13 @@ export class DeviceRepository implements DeviceGateway {
         }) : null
     }
 
-    async disableDevice(deviceId : number) : Promise<void> {
+    async alterStatusDevice(deviceId : number, status : StatusDevice) : Promise<void> {
         await this.prismaClient.device.update({
             where: {
                 id: deviceId
             },
             data: {
-                status: 'DISCONNECTED'
+                status
             }
         })
     }
