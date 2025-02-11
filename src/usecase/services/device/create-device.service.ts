@@ -42,7 +42,6 @@ export class CreateDeviceService implements UseCase<CreateDeviceInputDto, Create
             serialNumber : input.serialNumber,
             model : input.model,
             location : input.location,
-            status : input.status,
             userId : user.id
         })
 

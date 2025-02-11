@@ -6,7 +6,7 @@ export interface DeviceProps {
     serialNumber : string 
     model : string
     location : string
-    status : StatusDevice
+    status ?: StatusDevice
     userId : number   
     createdAt ?: Date
     updatedAt ?: Date
@@ -17,7 +17,10 @@ export class DeviceEntity {
     private constructor(private props : DeviceProps) {}
 
     public static build(props : DeviceProps) {
-        return new DeviceEntity(props)
+        return new DeviceEntity({
+            ...props,
+            status: 'ACTIVE'
+        })
     }
 
     public static with(props : DeviceProps) {
@@ -45,7 +48,7 @@ export class DeviceEntity {
     }
 
     get status() : StatusDevice {
-        return this.props.status
+        return this.props.status!
     }
 
     get userId() : number {

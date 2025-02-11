@@ -1,6 +1,7 @@
 import { PrismaClient } from "@prisma/client";
 import { DeviceEntity } from "../../../domains/device/entities/device.entity";
 import { DeviceGateway } from "../../../domains/device/gateway/device.gateway";
+import { idText } from "typescript";
 
 export class DeviceRepository implements DeviceGateway {
 
@@ -84,6 +85,35 @@ export class DeviceRepository implements DeviceGateway {
             status: device.status,
             userId: device.userId
         }) : null
+    }
+
+    async disableDevice(deviceId : number) : Promise<void> {
+        await this.prismaClient.device.update({
+            where: {
+                id: deviceId
+            },
+            data: {
+                status: 'DISCONNECTED'
+            }
+        })
+    }
+
+    async findAll() : Promise<DeviceEntity[]> {
+        const devices = await this.prismaClient.device.findMany()
+
+        const findDevices = devices.map((device) => {
+            return DeviceEntity.build({
+                id: device.id,
+                name: device.name,
+                serialNumber: device.serialNumber, 
+                model: device.model,
+                location: device.location,
+                status: device.status,
+                userId: device.userId
+            })
+        })
+
+        return findDevices
     }
 
 }

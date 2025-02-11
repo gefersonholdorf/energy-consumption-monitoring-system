@@ -84,4 +84,23 @@ export class ConsumptionRepository implements ConsumptionGateway {
 
         return result[0]?.average ?? null;
     }
+
+    async checkConsumptions(deviceId : number) {
+        const date = new Date();
+    
+        const dateString = date.toISOString().slice(0, 19).replace('T', ' ');
+
+        console.log(dateString)
+
+        const query = `
+            SELECT count(*) as result
+            FROM consumption
+            WHERE deviceId = ${deviceId}
+            AND timestamp BETWEEN DATE_SUB('${dateString}', INTERVAL 9 HOUR) AND '${dateString}';
+        `
+
+        const result = await this.prismaCLient.$queryRawUnsafe<{ result: number | null }[]>(query);
+
+        return result[0]?.result ?? null
+    }
 }

@@ -5,7 +5,8 @@ import { userRoutes } from "./src/infra/routes/user.routes"
 import { authRoutes } from "./src/infra/routes/auth.routes"
 import { deviceRoutes } from "./src/infra/routes/device.routes"
 import { consumptionRoutes } from "./src/infra/routes/consumption.routes"
-import { startSimulator } from "./simulator/consumption-simulator"
+import { checkConsumption } from "./src/startCheck"
+import { startSimulatorMain } from "./simulator/start-simulator"
 
 
 // Config
@@ -30,4 +31,7 @@ app.listen(port, () => {
     console.log(`Aplicação rodando na porta ${port}`)
 })
 
-startSimulator()
+startSimulatorMain()
+setInterval(async() => {
+    checkConsumption.execute()
+}, 60000)

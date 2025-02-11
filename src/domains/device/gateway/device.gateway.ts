@@ -5,4 +5,5 @@ export interface DeviceGateway {
     findBySerialNumber(serial : string) : Promise<DeviceEntity | null>
     findByUser(user : number) : Promise<DeviceEntity | null>
     findById(id : number) : Promise<DeviceEntity | null>
+    disableDevice(deviceId : number) : Promise<void>
 }
