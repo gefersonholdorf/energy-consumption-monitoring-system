@@ -5,6 +5,7 @@ import { userRoutes } from "./src/infra/routes/user.routes"
 import { authRoutes } from "./src/infra/routes/auth.routes"
 import { deviceRoutes } from "./src/infra/routes/device.routes"
 import { consumptionRoutes } from "./src/infra/routes/consumption.routes"
+import { startSimulator } from "./simulator/consumption-simulator"
 
 
 // Config
@@ -28,3 +29,5 @@ const port = Number(process.env.PORT) || 3000
 app.listen(port, () => {
     console.log(`Aplicação rodando na porta ${port}`)
 })
+
+startSimulator()

@@ -68,7 +68,7 @@ export class ConsumptionRepository implements ConsumptionGateway {
 
     async averageConsumption(deviceId : number, field : FielConsumption) : Promise<number | null> {
         const column = field.toString();
-        const allowedFields = ["powerUsage", "currentgt", "voltage"]; 
+        const allowedFields = ["powerUsage", "current", "voltage"]; 
 
         if (!allowedFields.includes(column)) {
             throw new Error("Invalid flied!");
