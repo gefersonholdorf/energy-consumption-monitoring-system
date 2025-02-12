@@ -22,6 +22,8 @@ model User {
   devices   Device[] 
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
+
+  @@map("user")
 }
 
 model Device {
@@ -37,6 +39,8 @@ model Device {
   alerts Alert[]
   createdAt   DateTime         @default(now())
   updatedAt   DateTime         @updatedAt
+
+  @@map("device")
 }
 
 enum DeviceStatus {
@@ -53,6 +57,8 @@ model Consumption {
   voltage     Float     // Tensão em volts (V)
   current     Float     // Corrente em amperes (A)
   timestamp   DateTime  @default(now()) // Data e hora da leitura
+
+  @@map("consumption")
 }
 
 model Alert {
@@ -63,6 +69,8 @@ model Alert {
   severity    AlertSeverity  // Nível do alerta
   resolved    Boolean   @default(false)
   createdAt   DateTime  @default(now())
+
+  @@map("alert")
 }
 
 enum AlertSeverity {

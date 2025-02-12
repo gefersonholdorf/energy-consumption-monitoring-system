@@ -1,5 +1,5 @@
 -- CreateTable
-CREATE TABLE `User` (
+CREATE TABLE `user` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
     `name` VARCHAR(191) NOT NULL,
     `email` VARCHAR(191) NOT NULL,
@@ -8,12 +8,12 @@ CREATE TABLE `User` (
     `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `updatedAt` DATETIME(3) NOT NULL,
 
-    UNIQUE INDEX `User_email_key`(`email`),
+    UNIQUE INDEX `user_email_key`(`email`),
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- CreateTable
-CREATE TABLE `Device` (
+CREATE TABLE `device` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
     `name` VARCHAR(191) NOT NULL,
     `serialNumber` VARCHAR(191) NOT NULL,
@@ -24,12 +24,12 @@ CREATE TABLE `Device` (
     `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `updatedAt` DATETIME(3) NOT NULL,
 
-    UNIQUE INDEX `Device_serialNumber_key`(`serialNumber`),
+    UNIQUE INDEX `device_serialNumber_key`(`serialNumber`),
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- CreateTable
-CREATE TABLE `Consumption` (
+CREATE TABLE `consumption` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
     `deviceId` INTEGER NOT NULL,
     `powerUsage` DOUBLE NOT NULL,
@@ -41,7 +41,7 @@ CREATE TABLE `Consumption` (
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- CreateTable
-CREATE TABLE `Alert` (
+CREATE TABLE `alert` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
     `deviceId` INTEGER NOT NULL,
     `message` VARCHAR(191) NOT NULL,
@@ -53,13 +53,13 @@ CREATE TABLE `Alert` (
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- AddForeignKey
-ALTER TABLE `Device` ADD CONSTRAINT `Device_userId_fkey` FOREIGN KEY (`userId`) REFERENCES `User`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE `device` ADD CONSTRAINT `device_userId_fkey` FOREIGN KEY (`userId`) REFERENCES `user`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE `Consumption` ADD CONSTRAINT `Consumption_deviceId_fkey` FOREIGN KEY (`deviceId`) REFERENCES `Device`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE `consumption` ADD CONSTRAINT `consumption_deviceId_fkey` FOREIGN KEY (`deviceId`) REFERENCES `device`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE `Alert` ADD CONSTRAINT `Alert_deviceId_fkey` FOREIGN KEY (`deviceId`) REFERENCES `Device`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE `alert` ADD CONSTRAINT `alert_deviceId_fkey` FOREIGN KEY (`deviceId`) REFERENCES `device`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 INSERT INTO user(name, email, password, enterprise, updatedAt) 
 VALUES('Usuário de Teste', 'testde@gmail.com.br', '$2a$10$BTP5toblNOBXPJGy93CfSuywNatpFdmed21oVxLTfr41wHd0BGd3S', 'Energy', NOW());

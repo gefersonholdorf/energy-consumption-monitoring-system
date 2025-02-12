@@ -1,0 +1,27 @@
+services:
+  app:
+    build: .
+    ports:
+      - 3000:3000
+    depends_on:
+      - db
+    networks:
+      - energy_consumption_network
+
+  db:
+    image: mysql:8
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: senha123rte  # Garantir que essa variável está aqui
+      MYSQL_DATABASE: energy_consumption
+    networks:
+      - energy_consumption_network
+    volumes:
+      - database_energy:/var/lib/mysql
+
+networks:
+  energy_consumption_network:
+
+volumes:
+  database_energy:
