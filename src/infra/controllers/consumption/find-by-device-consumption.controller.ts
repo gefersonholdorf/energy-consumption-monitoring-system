@@ -17,6 +17,9 @@ export class FindByDeviceConsumptioController implements Controller {
 
         const lastDay = new Date(newDate.getFullYear(), newDate.getMonth() + 1, 0, 23, 59, 59);
 
+        const page = Number(request.query.page) 
+        const quantity = Number(request.query.quantity)
+
         const dtInitial = request.query.dtInitial ? new Date(request.query.dtInitial as string) : firstDay;
         const dtFinish = request.query.dtFinish ? new Date(request.query.dtFinish as string) : lastDay;
         const deviceId = Number(request.params.id)
@@ -24,13 +27,19 @@ export class FindByDeviceConsumptioController implements Controller {
         const findByDeviceBody : FindByDeviceConsumptionInputDto = {
             deviceId,
             dtInitial,
-            dtFinish
+            dtFinish,
+            page,
+            quantity
         }
 
         try {
             const consumptions = await this.findByDeviceConsumptionService.execute(findByDeviceBody)
 
-            response.status(200).json(consumptions)
+            response.status(200).json({
+                consumptions,
+                page: page,
+                quantity: quantity
+            })
         } catch (error) {
             next(error)
         }

@@ -32,7 +32,7 @@ export class ConsumptionRepository implements ConsumptionGateway {
         })
     }
 
-    async findByDevice(id: number, dtInitial : Date, dtFinish : Date): Promise<ConsumptionEntity[]> {
+    async findByDevice(id: number, dtInitial : Date, dtFinish : Date, page : number, quantity : number): Promise<ConsumptionEntity[]> {
         const consumptions = await this.prismaCLient.consumption.findMany({
             where: {
                 AND: [
@@ -49,7 +49,9 @@ export class ConsumptionRepository implements ConsumptionGateway {
             },
             orderBy: {
                 timestamp: 'asc'
-            }
+            },
+            skip: (page - 1) * quantity,
+            take: quantity
         })
 
         const outputConsumptions = consumptions.map((consumption) => {

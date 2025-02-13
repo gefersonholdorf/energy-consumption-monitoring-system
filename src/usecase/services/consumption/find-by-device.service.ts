@@ -7,6 +7,8 @@ export interface FindByDeviceConsumptionInputDto {
     deviceId : number
     dtInitial : Date
     dtFinish : Date
+    page : number
+    quantity : number
 }
 
 export interface FindByDeviceConsumptionOutputDto {
@@ -38,7 +40,7 @@ export class FindByDeviceConsumptionService implements UseCase<FindByDeviceConsu
             throw new Error('Device not found!')
         }
         
-        const consumptions = await this.consumptionRepository.findByDevice(input.deviceId, input.dtInitial, input.dtFinish)
+        const consumptions = await this.consumptionRepository.findByDevice(input.deviceId, input.dtInitial, input.dtFinish, input.page, input.quantity)
 
         if(consumptions.length <= 0) {
             throw new Error('No results found!')

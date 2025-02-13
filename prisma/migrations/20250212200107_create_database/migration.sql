@@ -62,7 +62,7 @@ ALTER TABLE `consumption` ADD CONSTRAINT `consumption_deviceId_fkey` FOREIGN KEY
 ALTER TABLE `alert` ADD CONSTRAINT `alert_deviceId_fkey` FOREIGN KEY (`deviceId`) REFERENCES `device`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 INSERT INTO user(name, email, password, enterprise, updatedAt) 
-VALUES('Usuário de Teste', 'testde@gmail.com.br', '$2a$10$BTP5toblNOBXPJGy93CfSuywNatpFdmed21oVxLTfr41wHd0BGd3S', 'Energy', NOW());
+VALUES('Usuário de Teste', 'teste@gmail.com.br', '$2a$10$BTP5toblNOBXPJGy93CfSuywNatpFdmed21oVxLTfr41wHd0BGd3S', 'Energy', NOW());
 
 INSERT INTO device (name, serialNumber, model, location, status, userId, updatedAt)
 VALUES ('Medidor Sala Principal', 'ABdC123456789', 'SmartEnergy v2.0', 'Sala', 'ACTIVE', '1', now());
