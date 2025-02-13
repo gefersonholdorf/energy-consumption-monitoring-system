@@ -31,7 +31,9 @@ app.listen(port, () => {
     console.log(`Aplicação rodando na porta ${port}`)
 })
 
+setInterval(async() => {
 startSimulatorMain()
+}, 60000)
 setInterval(async() => {
     checkConsumption.execute()
 }, 60000)

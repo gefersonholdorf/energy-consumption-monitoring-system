@@ -3,15 +3,15 @@ import { DeviceEntity } from '../src/domains/device/entities/device.entity';
 
 
 
-export function startSimulator(devices : DeviceEntity[]) {  
+export async function startSimulator(devices : DeviceEntity[]) {  
+  let deviceId = null
     for(const device of devices) {
 
-      const deviceId = device.id
+      deviceId = device.id
 
-      const apiUrl = process.env.API_CONSUMPTION || `http://localhost:3000/devices/${deviceId}/consumption`
+      const apiUrl = `http://localhost:3000/devices/${deviceId}/consumption`
+      console.log(apiUrl)
 
-      setInterval(async () => {
-        // Simulação de valores com limites ampliados para alertas
         const voltage = Math.random() < 0.5 
           ? (127 + Math.random() * 40 - 20).toFixed(1) // Variação entre 107V e 147V
           : (220 + Math.random() * 60 - 30).toFixed(1); // Variação entre 190V e 250V
@@ -29,11 +29,11 @@ export function startSimulator(devices : DeviceEntity[]) {
         try {
           await axios.post(apiUrl, consumptionData);
           console.log(`Enviado: ${consumptionData.powerUsage}W | ${consumptionData.voltage}V | ${consumptionData.current}A`);
+          continue
       
         } catch (error) {
           console.error('Erro ao enviar dados:', error);
         }
-      }, 60000); // Envia dados a cada minuto
     }
 }
 
